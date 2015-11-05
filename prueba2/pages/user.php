@@ -29,7 +29,7 @@ $borrar=$_POST["borrar"];
 if($borrar != null){
 
     $id=$_POST["id"];
-    altaUser($conn,$id);
+    borrar($conn,$id);
 }
 
 ?>
@@ -248,23 +248,23 @@ if($borrar != null){
 
                                          <?php
                                                 
-                                            $result = "SELECT * from usuarios";
+                                            $result = "SELECT * from user";
 
                                            // $x=$conn->query($result);
                                             
                                          foreach ($conn->query($result) as $row) {
                                                 echo '<tr>';
-                                                 echo '<td>'. $row['id_administrador'] . '</td>';
-                                                echo '<td>'. $row['nombre_administrador'] . '</td>';
+                                                 echo '<td>'. $row['iduser'] . '</td>';
+                                                echo '<td>'. $row['name'] . '</td>';
                                                 echo '<td>'. $row['apellido'] . '</td>';
-                                                echo '<td>'. $row['id_administrador'] . '</td>';
-                                                echo '<td><button class="glyphicon glyphicon-trash" onclick="deleteUser('.$row['id_administrador'].','.'\''.$row['nombre_administrador'].'\''.')"/></td>';
+                                                echo '<td>'. $row['user'] . '</td>';
+                                                echo '<td><button class="glyphicon glyphicon-trash" onclick="deleteUser('.$row['iduser'].','.'\''.$row['name'].'\''.')"/></td>';
                                                 echo '</tr>';
                                             }
 
                                      
 
-                                         php?>
+                                         ?>
                                        
                                     </tbody>
                                 </table>
@@ -340,7 +340,7 @@ function altaUser($conn)
         $apellido=$_POST["apellido"]; 
         $pass=$_POST["pass"]; 
 
-        $sql = "INSERT INTO usuarios (nombre_administrador,apellido,password)
+        $sql = "INSERT INTO user (name,apellido,pass)
             VALUES ('$nombre','$apellido','$pass')";
 
 
@@ -356,8 +356,8 @@ function altaUser($conn)
 
 function borrar($conn, $id){
 
-    $sql="DELETE FROM usuarios
-            WHERE id_administrador='$id'";
+    $sql="DELETE FROM user
+            WHERE idUser='$id'";
       if ($conn->query($sql) === TRUE) {
             echo "delete successfully";
         } else{
@@ -365,5 +365,4 @@ function borrar($conn, $id){
         }
 
 }
-
-php?>
+?>

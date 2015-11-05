@@ -17,10 +17,10 @@ if(empty($usuario) || empty($pass)){
 mysql_connect('localhost','root','alberto') or die("Error al conectar " . mysql_error());
 mysql_select_db('proyecto') or die ("Error al seleccionar la Base de datos: " . mysql_error());
  
-$result = mysql_query("SELECT * from usuarios where nombre_administrador ='" . $usuario . "'");
+$result = mysql_query("SELECT * from user where user='" . $usuario . "'");
  
 if($row = mysql_fetch_array($result)){
-  if($row['password'] == $pass){
+  if($row['pass'] == $pass){
   session_start();
   $_SESSION['usuario'] = $usuario;
   header("Location: index.php");

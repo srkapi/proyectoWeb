@@ -1,0 +1,17 @@
+<?php
+
+require 'Slim/Slim.php';
+
+\Slim\Slim::registerAutoloader();
+
+$app=new \Slim\Slim();
+
+// Define app routes
+$app->get('/', function ($request, $response, $args) {
+    return $response->write("Hello ");
+});
+
+// Run app
+$app->run();
+
+?>
