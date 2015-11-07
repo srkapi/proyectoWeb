@@ -20,16 +20,21 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 $alta=$_POST["alta"];
 
-if($alta != null){
+if($alta != null && $alta=="true"){
     altaUser($conn);
 }
 
 
 $borrar=$_POST["borrar"];
-if($borrar != null){
+if($borrar != null && $borrar!="false"){
 
     $id=$_POST["id"];
     borrar($conn,$id);
+}
+$actualizar=$_POST["actualizar"];
+if($actualizar != null && $actualizar!="false"){
+    $id=$_POST["id"];
+    update($conn,$id);
 }
 
 ?>
@@ -65,29 +70,56 @@ if($borrar != null){
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
      <script  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+       <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript" src="angular.js"></script>
   
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+ 
 
     <script type="text/javascript">
 
+      $(function() {
+        $( "#dialog" ).dialog({
+          autoOpen: false,
+          show: {
+            effect: "blind",
+            duration: 1000
+          },
+          hide: {
+            effect: "explode",
+            duration: 1000
+          }
+        });
+     
+        $( "#opener" ).click(function() {
+          $( "#dialog" ).dialog( "open" );
+        });
+    });
+
         function deleteUser(id,nombre){
             var respuesta = confirm("¿Estás seguro de eliminar a "+nombre+"?");
-            document.getElementById("user").forms["id"]=id;
-            document.getElementById("user").forms["borrar"]=id;
-            document.getElementById("user").submit();
-                // Caso de Aceptar
-                if(respuesta)
-                    alert("hola");
-                else
-                   alert("Cancelado");
-    }
+          //  document.forms[4].value=id;
+            //document.forms[5].value="true";
+            
+            document.forms[0].elements[5].value=id;
+            document.forms[0].elements[6].value="true"; //borrar 
+            document.forms[0].elements[7].value="false";//alta
+            document.forms[0].elements[8].value="false";//actualiza
+            document.user.submit();
+        }
+
+        function updateUser(id,nombre,apellido,user){
+             document.forms[1].elements[0].placeholder=nombre;
+            document.forms[1].elements[1].placeholder=apellido;
+            document.forms[1].elements[2].placeholder=user;
+            document.forms[1].elements[5].value=id;
+            document.forms[1].elements[6].value="false";
+            document.forms[1].elements[7].value="false";
+            document.forms[1].elements[8].value="true";
+        }
 
 
     </script>
@@ -241,7 +273,8 @@ if($borrar != null){
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Username</th>
-                                            <th></th>
+                                            <th>Delete</th>
+                                            <th>Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -259,6 +292,7 @@ if($borrar != null){
                                                 echo '<td>'. $row['apellido'] . '</td>';
                                                 echo '<td>'. $row['user'] . '</td>';
                                                 echo '<td><button class="glyphicon glyphicon-trash" onclick="deleteUser('.$row['iduser'].','.'\''.$row['name'].'\''.')"/></td>';
+                                                echo '<td><button class="glyphicon glyphicon-pencil" onclick="updateUser('.$row['iduser'].','.'\''.$row['name'].'\''.','.'\''.$row['apellido'].'\''.','.'\''.$row['user'].'\''.')"ng-click="edit=!edit"></td>';
                                                 echo '</tr>';
                                             }
 
@@ -270,22 +304,27 @@ if($borrar != null){
                                 </table>
                                 <button type="button" ng-click="checked=!checked"  class="btn btn-success btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button>
                                 <div ng-show="checked">
-                                    <form name="user" action="user.php" method="post">
+                                    <form id="user" name="user" action="user.php" method="post">
                                         <p>
-                                        Nombre: <input type="text" name="nombre" autofocus required />
+                                        Nombre: <input type="text" ng-model="name" name="nombre" autofocus required />
                                         <br />
                                         <p>
-                                        Apellido: <input type="text" name="apellido" autofocus required />
+                                        Apellido: <input type="text" ng-model="apellido" name="apellido" autofocus required />
+                                        <br />
+                                        <p>
+                                        user <input type="text" ng-model="usuario" name="user" autofocus required />
                                         <br />
                                         
                                         <p>
-                                        Password: <input type="pass" name="pass" autofocus required />
+                                        Password: <input type="pass" ng-model="pass" name="pass" autofocus required />
                                         <br />
                                         <p>
                                         Re-password: <input type="pass"  autofocus required />
                                         <br />
-                                        
+                                        <input type="hidden" name="id">
+                                        <input type="hidden" name="borrar" value="false">
                                         <input type="hidden" name="alta" value="true">
+                                        <input type="hidden" name="actualizar" value="false">
                                         <button type="submit" >Añadir</button>
                                  </form> 
 
@@ -293,6 +332,7 @@ if($borrar != null){
 
                                 </div>
                                 <div ng-hide="checked"></div>
+                                
 
 
                         </div>
@@ -301,13 +341,40 @@ if($borrar != null){
                             <!-- /.table-responsive -->
                      </div>
 
+
                   
                     </div>
 
                         <!-- /.panel-body -->
                </div>
          </div>
-         
+         <div ng-show="edit">
+            <form id="update" name="update" action="user.php" method="post">
+              <p>
+                Nombre: <input type="text"  name="nombre" autofocus required />
+                <br />
+                <p>
+                  Apellido: <input type="text"   name="apellido" autofocus required />
+                       <br />
+                       <p>
+                       user <input type="text"   name="user" autofocus required />
+                       <br />
+                       
+                       <p>
+                       Password: <input type="pass"   name="pass" autofocus required />
+                       <br />
+                       <p>
+                       Re-password: <input type="pass"  autofocus required />
+                       <br />
+                       <input type="hidden" name="id">
+                       <input type="hidden" name="borrar" value="false">
+                       <input type="hidden" name="alta" value="false">
+                       <input type="hidden" name="actualizar" value="true">
+                       <button type="submit" >Añadir</button>
+                </form> 
+           
+                </div>
+                <div ng-hide="edit"></div>
 
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -339,9 +406,9 @@ function altaUser($conn)
         $nombre=$_POST["nombre"];
         $apellido=$_POST["apellido"]; 
         $pass=$_POST["pass"]; 
-
-        $sql = "INSERT INTO user (name,apellido,pass)
-            VALUES ('$nombre','$apellido','$pass')";
+        $user=$_POST["user"]; 
+        $sql = "INSERT INTO user (name,apellido,pass,user)
+            VALUES ('$nombre','$apellido','$pass','$user')";
 
 
         if ($conn->query($sql) === TRUE) {
@@ -355,9 +422,8 @@ function altaUser($conn)
 }
 
 function borrar($conn, $id){
-
     $sql="DELETE FROM user
-            WHERE idUser='$id'";
+            WHERE iduser='$id'";
       if ($conn->query($sql) === TRUE) {
             echo "delete successfully";
         } else{
@@ -365,4 +431,21 @@ function borrar($conn, $id){
         }
 
 }
+
+function update($conn, $id){
+        $nombre=$_POST["nombre"];
+        $apellido=$_POST["apellido"]; 
+        $pass=$_POST["pass"]; 
+        $user=$_POST["user"]; 
+    $sql="UPDATE user SET name='$nombre', apellido='$apellido',pass='$pass',user='$user' WHERE iduser='$id' ";
+    echo $sql;
+      if ($conn->query($sql) === TRUE) {
+            echo "update successfully";
+        } else{
+            echo "fatal error";
+        }
+
+}
+
+
 ?>
