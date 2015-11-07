@@ -158,7 +158,7 @@ if(!isset($_SESSION['usuario']))
                       
                         
                         <li>
-                            <a href="tables.html"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
+                            <a href="arduino.php"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
                         </li>
                         <li>
                             <a href="forms.html"><i class="glyphicon glyphicon-list fa-fw"></i> Interface</a>
