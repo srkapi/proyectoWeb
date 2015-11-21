@@ -19,8 +19,9 @@ $hum=$_GET["humedad"];
 
 $fecha=date("d/m/yyyy hh:mm");
 
-$consulta="INSERT INTO medidas (idArduino,tipo,medida)
-            VALUES ($id_arduino,'temperatura','$tem')";
+$consulta="INSERT INTO medidas (idArduino,tipo,medida,fecha)
+            VALUES ($id_arduino,'temperatura','$tem','$fecha')";
+
 
 if ($conn->query($consulta) === TRUE) {
 	echo ("New record created successfully");
