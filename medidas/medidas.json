@@ -1,22 +1,12 @@
-{"Medidas":[
-{"Temperatura":"11"},{"Humedad":"22"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"5"},{"Humedad":"28"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"38"},{"Humedad":"17"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"2"},{"Humedad":"73"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"44"},{"Humedad":"7"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"42"},{"Humedad":"11"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"16"},{"Humedad":"83"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"29"},{"Humedad":"14"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"10"},{"Humedad":"12"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"0"},{"Humedad":"11"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"45"},{"Humedad":"10"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"10"},{"Humedad":"6"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"44"},{"Humedad":"15"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"35"},{"Humedad":"75"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"31"},{"Humedad":"25"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"5"},{"Humedad":"63"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"34"},{"Humedad":"48"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"27"},{"Humedad":"33"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"14"},{"Humedad":"29"},{"Dispositivo":"1"},{"Fecha": "2015/11/19 17:00"}
-{"Temperatura":"42"},{"Humedad":"61"},{"Dispositivo":"2"},{"Fecha": "2015/11/19 17:00"}
+{"medidas:":[
+{"id":"0", "temperatura":"19", "humedad":"73", "fecha":"23/11/2015 21:14:54"},
+{"id":"1", "temperatura":"8", "humedad":"86", "fecha":"23/11/2015 21:14:56"},
+{"id":"2", "temperatura":"21", "humedad":"82", "fecha":"23/11/2015 21:14:58"},
+{"id":"3", "temperatura":"7", "humedad":"66", "fecha":"23/11/2015 21:15:00"},
+{"id":"4", "temperatura":"41", "humedad":"55", "fecha":"23/11/2015 21:15:02"},
+{"id":"5", "temperatura":"13", "humedad":"52", "fecha":"23/11/2015 21:15:04"},
+{"id":"6", "temperatura":"37", "humedad":"65", "fecha":"23/11/2015 21:15:06"},
+{"id":"7", "temperatura":"13", "humedad":"75", "fecha":"23/11/2015 21:15:08"},
+{"id":"8", "temperatura":"25", "humedad":"53", "fecha":"23/11/2015 21:15:10"},
+{"id":"9", "temperatura":"5", "humedad":"57", "fecha":"23/11/2015 21:15:12"}
 ]}

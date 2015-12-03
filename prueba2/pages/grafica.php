@@ -91,15 +91,16 @@ if($actualizar != null && $actualizar!="false"){
       google.setOnLoadCallback(drawChart);
 
         <?php 
-         $grafica="function drawChart() { var data = google.visualization.arrayToDataTable([['time', 'temperatura'],";
-            $medidas="SELECT medida from medidas where tipo='temperatura'";
+         $grafica="function drawChart() { var data = google.visualization.arrayToDataTable([['time', 'temperatura','humedad'],";
+            $medidas="SELECT * from medidas";
             $i=0;
            
 
+
             foreach ($conn->query($medidas) as $row) {
                     //echo $row["medida"];
-                    $grafica=$grafica . "['".$i."'".",".$row["medida"]."],";
-                    $i++;
+                    $grafica=$grafica . "['".$row["fecha"]."'".",".$row["temperatura"].",".$row["humedad"]."],";
+                    //$i++;
                   //  echo "$grafica \n";
             }
 
@@ -111,9 +112,21 @@ if($actualizar != null && $actualizar!="false"){
        
 
         var options = {
-          title: 'TEMPERATURA',
+          title: 'MEDIDAS',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: { position: 'bottom' },
+           series: {
+          // Gives each series an axis name that matches the Y-axis below.
+              0: {axis: 'Temps'},
+              1: {axis: 'humedad'}
+            },
+            axes: {
+          // Adds labels to each axis; they don't have to match the axis names.
+              y: {
+                Temps: {label: 'Temperatura (Celsius)'},
+                humedad: {label: 'humedad'}
+              }
+
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
