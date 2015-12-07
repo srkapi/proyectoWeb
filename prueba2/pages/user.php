@@ -1,4 +1,5 @@
 
+
 <?php
 
 
@@ -234,16 +235,19 @@ if($actualizar != null && $actualizar!="false"){
                       
                         
                         <li>
-                            <a href="tables.html"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
+                            <a href="arduino.php"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="glyphicon glyphicon-list fa-fw"></i> Interface</a>
+                            <a href="interface.php"><i class="glyphicon glyphicon-list fa-fw"></i> Interface</a>
                         </li>
                          <li>
-                            <a href="forms.html"><i class="glyphicon glyphicon-tint fa-fw"></i>Measures</a>
+                            <a href="grafica.php"><i class="glyphicon glyphicon-tint fa-fw"></i>Measures</a>
                         </li>
                          <li>
-                            <a href="forms.html"><i class="glyphicon glyphicon-user fa-fw"></i> User</a>
+                            <a href="user.php"><i class="glyphicon glyphicon-user fa-fw"></i> User</a>
+                        </li>
+                        <li>
+                            <a href="sketch.php"><i class="glyphicon glyphicon-user  glyphicon-file"></i>Sketch</a>
                         </li>
                          
    

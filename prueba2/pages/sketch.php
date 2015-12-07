@@ -1,5 +1,6 @@
-
 <?php
+
+require('connectionBD.php');
 session_start();
 //validamos si se ha hecho o no el inicio de sesion correctamente
 
@@ -9,6 +10,52 @@ if(!isset($_SESSION['usuario']))
   header('Location: login.html'); 
   exit();
 }
+
+$conn=connection();
+
+
+
+$post=$_POST['file'];
+
+if($post!=null){
+        $input = Input::all();
+        $rules = array(
+            'file' => 'image|max:3000',
+        );
+        $validation = Validator::make($input, $rules);
+        if ($validation->fails())
+        {
+            return Response::make($validation->errors->first(), 400);
+        }
+
+        $file = Input::file('file');
+        $extension = File::extension($file['name']);
+        $directory = path('public').'uploads/'.sha1(time());
+        $filename = sha1(time().time()).".{$extension}";
+        $upload_success = Input::upload('file', $directory, $filename);
+        if( $upload_success ) {
+            return Response::json('success', 200);
+        } else {
+            return Response::json('error', 400);
+        }
+    }
+
+
+if($conn!=null){
+    //header('Location: login.html'); 
+    //exit();
+}
+
+
+
+$borrar=$_POST["borrar"];
+if($borrar != null && $borrar!="false"){
+    echo "llamando a borrar";
+    $id=$_POST["id"];
+    borrarArduino($conn,$id);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +71,7 @@ if(!isset($_SESSION['usuario']))
     <title>Arduino project</title>
 
     <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" type="text/css" href="css/usuarios.css" >
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -40,17 +88,31 @@ if(!isset($_SESSION['usuario']))
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+     <script  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+       <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript" src="angular.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+
+  
+
 
 </head>
 
-<body>
+<body ng-app>
 
     <div id="wrapper">
 
@@ -141,7 +203,56 @@ if(!isset($_SESSION['usuario']))
             </ul>
             <!-- /.navbar-top-links -->
 
-         
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                      
+                        
+                            <li>
+                            <a href="arduino.php"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
+                        </li>
+                        <li>
+                            <a href="interface.php"><i class="glyphicon glyphicon-list fa-fw"></i> Interface</a>
+                        </li>
+                         <li>
+                            <a href="grafica.php"><i class="glyphicon glyphicon-tint fa-fw"></i>Measures</a>
+                        </li>
+                         <li>
+                            <a href="user.php"><i class="glyphicon glyphicon-user fa-fw"></i> User</a>
+                        </li>
+                         
+                        <li>
+                            <a href="sketch.php"><i class="glyphicon glyphicon-user  glyphicon-file"></i>Sketch</a>
+                        </li>
+   
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+
+
+      <form action="upload.php" method="post" enctype="multipart/form-data">
+            Select image to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+        </div>
+            
+                
 
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -160,6 +271,13 @@ if(!isset($_SESSION['usuario']))
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
+
 </body>
 
 </html>
+
+<?php
+
+
+  mysql_close();
+?>
