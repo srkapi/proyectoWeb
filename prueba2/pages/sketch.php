@@ -55,14 +55,7 @@ if($conn!=null){
        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-   <script type="text/javascript"
-          src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
+  
   <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript" src="angular.js"></script>
 
@@ -75,7 +68,7 @@ if($conn!=null){
 
 </head>
 
-<body ng-app>
+<body>
 
     <div id="wrapper">
 
@@ -207,14 +200,7 @@ if($conn!=null){
 
         <div id="page-wrapper">
 
-
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-            Select image to upload:
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" value="Upload Image" name="submit">
-        </form>
-        </div>
-            
+    <form action="upload.php" class="dropzone"></form>
                 
 
     <!-- jQuery -->
