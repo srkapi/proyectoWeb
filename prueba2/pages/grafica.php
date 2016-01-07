@@ -13,28 +13,8 @@ if(!isset($_SESSION['usuario']))
 
 $conn=connection();
 
-if($conn!=null){
-    //header('Location: login.html'); 
-    //exit();
-}
-
-$alta=$_POST["alta"];
-
-if($alta != null && $alta=="true"){
-    altaArduino($conn);
-}
-
-
-$borrar=$_POST["borrar"];
-if($borrar != null && $borrar!="false"){
-    echo "llamando a borrar";
-    $id=$_POST["id"];
-    borrarArduino($conn,$id);
-}
-$actualizar=$_POST["actualizar"];
-if($actualizar != null && $actualizar!="false"){
-    $id=$_POST["id"];
-    updateArduino($conn,$id);
+if($conn ==null){
+    echo "fatal error"; 
 }
 
 ?>
@@ -69,64 +49,40 @@ if($actualizar != null && $actualizar!="false"){
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-     <script  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  
        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-   <script type="text/javascript"
-          src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-<script type="text/javascript" src="angular.js"></script>
-  
-
- 
-
-    <script type="text/javascript">
-      google.setOnLoadCallback(drawChart);
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+        function drawChart() { 
+            var data = google.visualization.arrayToDataTable([['time','temperatura','humedad'],
         <?php 
-         $grafica="function drawChart() { var data = google.visualization.arrayToDataTable([['time', 'temperatura','humedad'],";
+         $grafica="";
             $medidas="SELECT * from medidas";
             $i=0;
-           
-
 
             foreach ($conn->query($medidas) as $row) {
-                    //echo $row["medida"];
-                    $grafica=$grafica . "['".$row["fecha"]."'".",".$row["temperatura"].",".$row["humedad"]."],";
-                    //$i++;
-                  //  echo "$grafica \n";
+                $grafica=$grafica . "['".$row["fecha"]."'".",".$row["temperatura"].",".$row["humedad"]."],";
             }
+
+            $array=str_split ( $grafica );
+            $count=count($array);
+
+            $array[$count-1]="";
+            $grafica=implode($array);
 
             $grafica=$grafica . "]);";
 
             echo $grafica;
-       ?>
+        ?>
 
-       
-
-        var options = {
-          title: 'MEDIDAS',
+          var options = {
+          title: 'Company Performance',
           curveType: 'function',
-          legend: { position: 'bottom' },
-           series: {
-          // Gives each series an axis name that matches the Y-axis below.
-              0: {axis: 'Temps'},
-              1: {axis: 'humedad'}
-            },
-            axes: {
-          // Adds labels to each axis; they don't have to match the axis names.
-              y: {
-                Temps: {label: 'Temperatura (Celsius)'},
-                humedad: {label: 'humedad'}
-              }
-
+          legend: { position: 'bottom' }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -135,9 +91,14 @@ if($actualizar != null && $actualizar!="false"){
       }
     </script>
 
+   
+
+ 
+   
+
 </head>
 
-<body ng-app>
+<body >
 
     <div id="wrapper">
 
@@ -160,48 +121,7 @@ if($actualizar != null && $actualizar!="false"){
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>kapi</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Dani</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
+              
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
@@ -261,6 +181,7 @@ if($actualizar != null && $actualizar!="false"){
                             <a href="sketch.php"><i class="glyphicon glyphicon-user  glyphicon-file"></i>Sketch</a>
                         </li>
    
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -269,14 +190,21 @@ if($actualizar != null && $actualizar!="false"){
 
         <div id="page-wrapper">
 
-             <div id="curve_chart" style="width: 900px; height: 500px"></div>
+        
+
+         <div id="curve_chart" style="width: 900px; height: 500px"></div>
 
 
 
 
         </div>
             
-                
+  
+</body>   
+
+
+
+
 
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -294,9 +222,6 @@ if($actualizar != null && $actualizar!="false"){
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-
-
-</body>
 
 </html>
 

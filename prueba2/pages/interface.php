@@ -14,28 +14,11 @@ if(!isset($_SESSION['usuario']))
 
 $conn=connection();
 
-if($conn!=null){
-    //header('Location: login.html'); 
-    //exit();
-}
 
-$alta=$_POST["alta"];
-
-if($alta != null && $alta=="true"){
-    altaArduino($conn);
-}
-
-
-$borrar=$_POST["borrar"];
-if($borrar != null && $borrar!="false"){
-    echo "llamando a borrar";
-    $id=$_POST["id"];
-    borrarArduino($conn,$id);
-}
 $actualizar=$_POST["actualizar"];
 if($actualizar != null && $actualizar!="false"){
     $id=$_POST["id"];
-    updateArduino($conn,$id);
+    updateInterface($conn,$id);
 }
 
 ?>
@@ -84,26 +67,15 @@ if($actualizar != null && $actualizar!="false"){
 
     
 
-        function deleteArduino(id){
-            var respuesta = confirm("¿Estás seguro de eliminar el arduino?");
-            alert(id);
+       
 
-            if(respuesta){
-                document.forms[0].id.value=id;
-                document.forms[0].borrar.value="true"; //borrar 
+        function updateInterface(id,ip,mac){
+             document.forms[0].elements[0].placeholder=ip;
+            document.forms[0].elements[1].placeholder=mac;
+            document.forms[0].id.value=id;
+             document.forms[0].borrar.value="false"; //borrar 
                 document.forms[0].alta.value="false";//alta
-                document.forms[0].actualizar.value="false";//actualiza
-                document.forms[0].submit();
-            }
-        }
-
-        function updateArduino(id,coor,desc){
-             document.forms[1].elements[0].placeholder=coor;
-            document.forms[1].elements[1].placeholder=desc;
-            document.forms[1].id.value=id;
-             document.forms[1].borrar.value="false"; //borrar 
-                document.forms[1].alta.value="false";//alta
-                document.forms[1].actualizar.value="true";//actualiza
+                document.forms[0].actualizar.value="true";//actualiza
         }
 
 
@@ -249,7 +221,7 @@ if($actualizar != null && $actualizar!="false"){
                     <div class="margenUser">
                      <div class="panel panel-default">
                         <div class="panel-heading">
-                            Arduino
+                            Inteface
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -258,41 +230,29 @@ if($actualizar != null && $actualizar!="false"){
                                    
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>coordenadas</th>
-                                            <th>Description</th>
+                                            <th>Id</th>
+                                            <th>Tipo</th>
+                                            <th>MAC</th>
                                             <th>IP</th>
-                                            <th>Active</th>
-                                            <th>Delete</th>
-                                            <th>Edit</th>
+                                            <th>update</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                          <?php
                                                 
-                                            $result = "SELECT idYun_item,coorKML,descripcion,IP,active  from Yun_item join interface on (idYun_item=idinterface)  ";
+                                            $result = "SELECT idinterface, tipo , MAC , IP  from  interface ";
 
                                            // $x=$conn->query($result);
                                             
                                          foreach ($conn->query($result) as $row) {
                                                 echo '<tr>';
-                                                 echo '<td>'. $row['idYun_item'] . '</td>';
-                                                echo '<td>'. $row['coorKML'] . '</td>';
-                                                echo '<td>'. $row['descripcion'] . '</td>';
+                                                 echo '<td>'. $row['idinterface'] . '</td>';
+                                                echo '<td>'. $row['tipo'] . '</td>';
+                                                echo '<td>'. $row['MAC'] . '</td>';
                                                 echo '<td>'. $row['IP'] . '</td>';
-                                                //echo '<td>'. $row['active'] . '</td>';
-                                               
-                                               if($row['active']){
-                                                    echo '<td><button type="button" class="btn btn-success btn-circle"><i class="fa fa-check"></i>
-                                                            </button></td>';
-                                                }else{
-                                                    echo '<td><button type="button" class="btn btn-warning btn-circle"><i class="fa fa-times"></i>
-                                                            </button></td>';
-                                                }
-                                                echo '<td><button class="glyphicon glyphicon-trash" onclick="deleteArduino('.$row['idYun_item'].')"/></td>';
                                                 echo '<td><button class="glyphicon glyphicon-pencil"
-                                                  onclick="updateArduino('.$row['idYun_item'].','.'\''.$row['coorKML'].'\''.','.'\''.$row['descripcion'].'\''.')" ng-click="edit=!edit"/></td>';
+                                                  onclick="updateInterface('.$row['idinterface'].','.'\''.$row['tipo'].'\''.','.'\''.$row['IP'].'\''.')" ng-click="edit=!edit"/></td>';
                                                 echo '</tr>';
                                             }
 
@@ -302,65 +262,42 @@ if($actualizar != null && $actualizar!="false"){
                                        
                                     </tbody>
                                 </table>
-                                <button type="button" ng-click="checked=!checked"  class="btn btn-success btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button>
-                                <div ng-show="checked">
-                                     <div class="col-lg-6">
-                                        <div class="panel panel-green">
-                                            <div class="panel-heading">
-                                                New Arduino
-                                            </div>
-                                            <div class="panel-body">
-                                                <form id="arduino" name="arduino" action="arduino.php" method="post">
-                                                    <p>
-                                                    Coordenadas: <input type="text" ng-model="coor" name="coor" autofocus required />
-                                                    <br />
-                                                    <p>
-                                                    Ubicacion: <input type="text" ng-model="ubi" name="ubi" autofocus required />
-                                                    <br />
-                                                    <p>
-                                                    Descripcion: <input type="text" ng-model="desc" name="desc" autofocus required />
-                                                    <br />
-                                                    <div class="col-lg-14">
-                                                    <div class="panel panel-warning">
-                                                        <div class="panel-heading">
-                                                            Inteface
-                                                        </div>
-                                                        <div class="panel-body">
-                                                             <p>
-                                                                Tipo: <input type="text"  name="tipo" autofocus required />
-                                                                <br />
-                                                                <p>
-                                                                MAC: <input type="text"  name="mac" autofocus required />
-                                                                <br />
-                                                                <p>
-                                                                IP: <input type="text"  name="ip" autofocus required />
-                                                                <br />
-                                                            
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                                    
+                              
 
-                                                    <input type="hidden" name="id">
-                                                    <input type="hidden" name="borrar" value="false">
-                                                    <input type="hidden" name="alta" value="true">
-                                                    <input type="hidden" name="actualizar" value="false">
-                                                    <button type="submit" >Añadir</button>
-                                             </form> 
+              <div ng-hide="edit">
+             <div class="col-lg-4">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            Edit Interface
+                        </div>
+                        <div class="panel-body">
 
-
-                                             </div>
-                                        <div class="panel-footer">
-                                            New Arduino
-                                        </div>
-                                        </div>
-                                    <!-- /.col-lg-4 -->
-                                </div>
-                                <div ng-hide="checked"></div>
-                                
-
-                </div>
+                              <form id="edit" name="edit" action="interface.php" method="post">
+                                   <p>
+                                   Tipo: <input type="text" ng-model="tipo" name="tipo" autofocus required />
+                                    <br />
+                                    <p>
+                                    MAC: <input type="text" ng-model="MAC" name="MAC" autofocus required />
+                                    <br />
+                                    <p>
+                                    IP: <input type="text" ng-model="IP" name="IP" autofocus required />
+                                    <br />
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="borrar" value="false">
+                                    <input type="hidden" name="alta" value="false">
+                                    <input type="hidden" name="actualizar" value="true">
+                                    <button type="submit" >Añadir</button>
+                               </form>
+                           
+                        </div>
+                        <div class="panel-footer">
+                            Update Interface
+                        </div>
+                    </div>
+             </div>
+         <div ng-show="edit"></div>
+                    </div>
+             </div>
 
                         </div>
                        
@@ -375,38 +312,7 @@ if($actualizar != null && $actualizar!="false"){
                         <!-- /.panel-body -->
                </div>
          </div>
-         <div ng-hide="edit">
-             <div class="col-lg-4">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            Edit Arduino
-                        </div>
-                        <div class="panel-body">
-
-                              <form id="edit" name="edit" action="arduino.php" method="post">
-                                   <p>
-                                   Coordenadas: <input type="text" ng-model="coor" name="coor" autofocus required />
-                                    <br />
-                                    <p>
-                                    Ubicacion: <input type="text" ng-model="ubi" name="ubi" autofocus required />
-                                    <br />
-                                    <p>
-                                    Descripcion: <input type="text" ng-model="desc" name="desc" autofocus required />
-                                    <br />
-                                    <input type="hidden" name="id">
-                                    <input type="hidden" name="borrar" value="false">
-                                    <input type="hidden" name="alta" value="false">
-                                    <input type="hidden" name="actualizar" value="true">
-                                    <button type="submit" >Añadir</button>
-                               </form>
-                           
-                        </div>
-                        <div class="panel-footer">
-                            Update Arduino
-                        </div>
-                    </div>
-             </div>
-         <div ng-show="edit"></div>
+        
 
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -433,58 +339,17 @@ if($actualizar != null && $actualizar!="false"){
 <?php
 
 
-function altaArduino($conn)
-{
-
-        $coor=$_POST["coor"];
-        $ubi=$_POST["ubi"];
-        $desc=$_POST["desc"];
-        $tipo=$_POST["tipo"];
-        $mac=$_POST["mac"];
-        $ip=$_POST["ip"];
-        $sql = "INSERT INTO Yun_item (coorKML,descripcion,ubicacion)
-            VALUES ('$coor','$desc','$ubi')";
-
-
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
-        } else{
-            echo "fatal error";
-        }
-
-
-
-        $sql = "INSERT INTO interface (tipo,MAC,IP)
-            VALUES ('$tipo','$mac','$ip')";
-        echo $sql;
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
-        } else{
-            echo "fatal error";
-        }
-
 
   
-}
 
-function borrarArduino($conn, $id){
-    $sql="DELETE FROM Yun_item
-            WHERE idYun_item='$id'";
-            echo $id;
-      if ($conn->query($sql) === TRUE) {
-            echo "delete successfully";
-        } else{
-            echo "fatal error";
-        }
 
-}
-
-function updateArduino($conn, $id){
-       $coor=$_POST["coor"];
-        $ubi=$_POST["ubi"];
-        $desc=$_POST["desc"];
+function updateInterface($conn, $id){
+      
+        $tipo=$_POST["tipo"];
+        $mac=$_POST["MAC"];
+        $ip=$_POST["IP"];
         echo $id;
-    $sql="UPDATE Yun_item SET coorKML='$coor', ubicacion='$ubi', descripcion='$desc' WHERE idYun_item='$id'";
+    $sql="UPDATE interface SET tipo='$tipo', MAC='$mac', IP='$ip' WHERE idinterface='$id'";
       if ($conn->query($sql) === TRUE) {
             echo "update successfully";
         } else{
