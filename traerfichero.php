@@ -47,7 +47,7 @@ if(file_exists($filePath)) {
     		$fecha= $variable['fecha'];
     		$humedad= $variable['humedad'];
     		$consulta="INSERT INTO medidas (idArduino,temperatura,humedad,fecha)
-            VALUES (1,'$tem','$humedad','$fecha')";
+            VALUES (6,'$tem','$humedad','$fecha')";
 			if ($conn->query($consulta) === TRUE) {
 					echo ("New record created successfully");
 			} else{

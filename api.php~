@@ -1,5 +1,0 @@
-<?php
-$app = new \Slim\Slim();
-
-echo "hola";
-?>
