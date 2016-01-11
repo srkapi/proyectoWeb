@@ -1,7 +1,8 @@
 
 <?php
 
-$uploaddir = '/var/www/html/uploads/';
+$uploaddir = '/var/www/html/sketch/';
+
 $uploadfile = $uploaddir . basename($_FILES['file']['tmp_name']);
 if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";

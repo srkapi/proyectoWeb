@@ -8,7 +8,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     echo('No pudo conectarse: ' . mysql_error());
 }else{
-    echo "Va perfecto \n" ;
+	echo "Va perfecto \n" ;
 }
 
 $ch = curl_init("http://192.168.0.189/medidas.json");
@@ -32,34 +32,34 @@ if(file_exists($filePath)) {
     fclose($handle);
     if(!empty($fileContents)) {
 
-        //echo $fileContents;
+    	//echo $fileContents;
 
-        $data =json_decode($fileContents,true);
+    	$data =json_decode($fileContents,true);
 
-        //print_r($data);
+    	//print_r($data);
 
-        $object = (object)$data["medidas:"];
+       	$object = (object)$data["medidas:"];
 
-        
-        foreach ( $object as $variable) {
-            $tem= $variable['temperatura'];
+       	
+    	foreach ( $object as $variable) {
+    		$tem= $variable['temperatura'];
             echo $tem;
-            $id= $variable['id'];
-            $fecha= $variable['fecha'];
-            echo $fecha;
+    		$id= $variable['id'];
+    		$fecha= $variable['fecha'];
+    		echo $fecha;
             $humedad= $variable['humedad'];
-            $consulta="INSERT INTO medidas (idArduino,temperatura,humedad,fecha)
+    		$consulta="INSERT INTO medidas (idArduino,temperatura,humedad,fecha)
             VALUES (6,'$tem','$humedad','$fecha')";
-            if ($conn->query($consulta) === TRUE) {
-                    echo ("New record created successfully");
-            } else{
-                echo ("fatal error");
-            }
+			if ($conn->query($consulta) === TRUE) {
+					echo ("New record created successfully");
+			} else{
+			    echo ("fatal error");
+			}
 
 
-        }
+		}
 
-        mysql_close();
+    	mysql_close();
     }
  
 }

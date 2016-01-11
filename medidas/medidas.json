@@ -1,12 +1,6 @@
 {"medidas:":[
-{"id":"0", "temperatura":"42", "humedad":"58", "fecha":"08/01/2016 19:57:25"},
-{"id":"1", "temperatura":"48", "humedad":"89", "fecha":"08/01/2016 19:57:27"},
-{"id":"2", "temperatura":"38", "humedad":"70", "fecha":"08/01/2016 19:57:29"},
-{"id":"3", "temperatura":"42", "humedad":"66", "fecha":"08/01/2016 19:57:31"},
-{"id":"4", "temperatura":"1", "humedad":"56", "fecha":"08/01/2016 19:57:33"},
-{"id":"5", "temperatura":"22", "humedad":"64", "fecha":"08/01/2016 19:57:35"},
-{"id":"6", "temperatura":"37", "humedad":"85", "fecha":"08/01/2016 19:57:37"},
-{"id":"7", "temperatura":"7", "humedad":"75", "fecha":"08/01/2016 19:57:39"},
-{"id":"8", "temperatura":"39", "humedad":"70", "fecha":"08/01/2016 19:57:41"},
-{"id":"9", "temperatura":"29", "humedad":"67", "fecha":"08/01/2016 19:57:43"}
+{"id":"6", "temperatura":"27.00", "humedad":"32.00", "fecha":"11/01/2016 20:39:01"},
+{"id":"6", "temperatura":"26.00", "humedad":"33.00", "fecha":"11/01/2016 20:42:01"},
+{"id":"6", "temperatura":"26.00", "humedad":"33.00", "fecha":"11/01/2016 20:45:01"},
+{"id":"6", "temperatura":"25.00", "humedad":"33.00", "fecha":"11/01/2016 20:48:01"}
 ]}
