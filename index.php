@@ -23,6 +23,7 @@ if(!isset($_SESSION['usuario']))
 
     <title>Arduino project</title>
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -68,8 +69,7 @@ if(!isset($_SESSION['usuario']))
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">             
-               
-                <!-- /.dropdown -->
+      
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $_SESSION['usuario']?>
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>

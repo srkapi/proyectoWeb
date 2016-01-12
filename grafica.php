@@ -31,8 +31,10 @@ if($conn ==null){
 
     <title>Arduino project</title>
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
     <!-- Bootstrap Core CSS -->
-      <link rel="stylesheet" type="text/css" href="css/usuarios.css" >
+    <link rel="stylesheet" type="text/css" href="css/usuarios.css" >
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -50,13 +52,13 @@ if($conn ==null){
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   
-       <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
         function drawChart() { 
             var data = google.visualization.arrayToDataTable([['time','temperatura','humedad'],
         <?php 
@@ -80,7 +82,7 @@ google.charts.setOnLoadCallback(drawChart);
         ?>
 
           var options = {
-          title: 'Company Performance',
+          title: 'Temperature and humidity graph',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
@@ -111,25 +113,13 @@ google.charts.setOnLoadCallback(drawChart);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Arduino project</a>
+                <a class="navbar-brand" href="index.php">Arduino project</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-              
-                    </ul>
-                    <!-- /.dropdown-messages -->
-                </li>
-                <!-- /.dropdown -->
-               
-               
-                <!-- /.dropdown -->
-                <li class="dropdown">
+            <ul class="nav navbar-top-links navbar-right">      
+
+                  <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $_SESSION['usuario']?>
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -148,40 +138,26 @@ google.charts.setOnLoadCallback(drawChart);
             </ul>
             <!-- /.navbar-top-links -->
 
+            
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-                      
-                        
-                            <li>
-                            <a href="arduino.php"><i class=" glyphicon glyphicon-wrench fa-fw "></i>Arduinos</a>
+                        <li>
+                            <a href="arduino.php"><i class=" glyphicon glyphicon-wrench fa-fw "></i> Arduinos</a>
                         </li>
                         <li>
-                            <a href="interface.php"><i class="glyphicon glyphicon-list fa-fw"></i> Interface</a>
+                            <a href="interface.php"><i class="glyphicon glyphicon-list fa-fw"></i> Interfaces</a>
                         </li>
                          <li>
-                            <a href="grafica.php"><i class="glyphicon glyphicon-tint fa-fw"></i>Measures</a>
+                            <a href="grafica.php"><i class="glyphicon glyphicon-tint fa-fw"></i> Graphics</a>
                         </li>
                          <li>
-                            <a href="user.php"><i class="glyphicon glyphicon-user fa-fw"></i> User</a>
+                            <a href="user.php"><i class="glyphicon glyphicon-user fa-fw"></i> Users</a>
                         </li>
-                         
                         <li>
-                            <a href="sketch.php"><i class="glyphicon glyphicon-user  glyphicon-file"></i>Sketch</a>
+                            <a href="sketch.php"><i class="glyphicon glyphicon-user  glyphicon-file"></i> Sketch</a>
                         </li>
    
-
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
